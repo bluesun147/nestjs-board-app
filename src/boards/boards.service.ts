@@ -26,7 +26,11 @@ export class BoardsService {
         return board;
     }
 
-    getBoardById(id: string): Board{
+    getBoardById(id: string): Board{ // id로 게시물 읽기
         return this.boards.find((board) => board.id === id);
+    }
+
+    deleteBoard(id: string): void{ // id로 게시물 삭제
+        this.boards = this.boards.filter((board) => board.id !== id); // id 다른것만 남김.
     }
 }
