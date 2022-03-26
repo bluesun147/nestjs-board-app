@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Board } from './board.model';
 import { BoardsService } from './boards.service';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('boards') // /boards 라는 경로
 export class BoardsController {
@@ -16,5 +17,15 @@ export class BoardsController {
     @Get('/') // http 메서드가 get 일때. 주소: /boards/
     getAllBoard(): Board[] { // 모든 게시글 가져오는 핸들러. // : 리턴 타입 정의
         return this.boardService.getAllBoards(); // 리퀘스트 핸들은 서비스에서 하고 처리한 값은 컨트롤러에 보내고, 컨트롤러에서 처리한 값 클라이언트에 보냄.
+    }
+
+    @Post()
+    createBoard( // 게시물 생성
+        // @Body('title') title: string,
+        // @Body('description') description: string
+        @Body() CreateBoardDto: CreateBoardDto
+    ): Board {
+        // return this.boardService.createBoard(title, description); // boardService의 createBoard 메서드
+        return this.boardService.createBoard(CreateBoardDto);
     }
 }
