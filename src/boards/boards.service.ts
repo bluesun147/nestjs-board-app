@@ -5,7 +5,7 @@ import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsService {
-    private boards: Board[] = []; // 게시글 배열
+    boards: Board[] = []; // 게시글 배열
 
     // 모든 게시글 읽기. board controller에서 사용
     getAllBoards(): Board[] { // :Board[] 는 리턴값의 타입
@@ -24,5 +24,9 @@ export class BoardsService {
 
         this.boards.push(board);
         return board;
+    }
+
+    getBoardById(id: string): Board{
+        return this.boards.find((board) => board.id === id);
     }
 }

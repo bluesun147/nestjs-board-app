@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Board } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -28,4 +28,13 @@ export class BoardsController {
         // return this.boardService.createBoard(title, description); // boardService의 createBoard 메서드
         return this.boardService.createBoard(CreateBoardDto);
     }
+
+    // localhost:3000?id=aaa
+    @Get('/:id')
+    getBoardById(@Param('id') id: string): Board { // 게시물 하나 리턴
+        return this.boardService.getBoardById(id);
+        // 파라미터 여러개 있는 경우 다 가져올 때는 
+        // @Param() params: string[]
+    }
 }
+
