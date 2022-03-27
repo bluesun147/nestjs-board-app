@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { Board } from './board.model';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 @Controller('boards') // /boards 라는 경로
 export class BoardsController {
@@ -20,6 +21,7 @@ export class BoardsController {
     }
 
     @Post()
+    @UsePipes(ValidationPipe)
     createBoard( // 게시물 생성
         // @Body('title') title: string,
         // @Body('description') description: string
@@ -40,6 +42,14 @@ export class BoardsController {
     @Delete('/:id')
     deleteBoardById(@Param('id') id: string): void { // 게시물 하나 삭제
         this.boardService.deleteBoard(id);
+    }
+
+    @Patch('/:id/status')
+    updateBoardStatus( // 게시물 상태 업데이트
+        @Param('id') id:string,
+        @Body('status', BoardStatusValidationPipe) status: BoardStatus // status 값만 유효성 체크. 파라미터 레벨
+    ) {
+        return this.boardService.updateBoardStatus(id, status);
     }
 }
 
