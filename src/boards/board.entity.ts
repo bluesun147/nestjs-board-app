@@ -1,5 +1,5 @@
 // 엔티티 파일
-// 자동적으로 이러한 컬럼들 가진 보드 테이블 생성
+// 자동적으로 이러한 컬럼들 가진 보드 테이블 생성 (자동으로 테이블로 변환)
 
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { BoardStatus } from "./board.model";
