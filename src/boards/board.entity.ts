@@ -2,7 +2,7 @@
 // 자동적으로 이러한 컬럼들 가진 보드 테이블 생성 (자동으로 테이블로 변환)
 
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { BoardStatus } from "./board.model";
+import { BoardStatus } from "./board-status.enum";
 
 @Entity() // @Entity() 데코레이터 클래스는 Board 클래스가 엔티티임을 나타냄.
 export class Board extends BaseEntity {
