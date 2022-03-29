@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BoardStatus } from './board-status.enum';
 import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
@@ -20,6 +20,11 @@ export class BoardsController {
     @Get('/:id')
     getBoardById(@Param('id') id: number): Promise <Board> { // id 이용해 특정 게시물 가져오기
         return this.boardsService.getBoardById(id);
+    }
+
+    @Delete('/:id')
+    deleteBoardById(@Param('id', ParseIntPipe) id: number): Promise <void> { // ParseIntPipe: nest built-in pipe. integer만.
+        return this.boardsService.deleteBoardById(id);
     }
 
 }

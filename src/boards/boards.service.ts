@@ -32,7 +32,15 @@ export class BoardsService {
         return found;
     }
 
-    
+    async deleteBoardById(id: number): Promise<void> { // id로 게시물 삭제
+        const result = await this.boardRepository.delete(id);
+
+            if (result.affected === 0) {
+                throw new NotFoundException(`Can't find Board with id ${id}`);
+            }
+
+            console.log(result); // DeleteResult { raw: [], affected: 1 } // 성공 시. 없으면 0
+    }
 }
 
 
