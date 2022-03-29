@@ -32,7 +32,8 @@ export class BoardsService {
         return found;
     }
 
-    async deleteBoardById(id: number): Promise<void> { // id로 게시물 삭제
+     // id로 게시물 삭제
+    async deleteBoardById(id: number): Promise<void> {
         const result = await this.boardRepository.delete(id);
 
             if (result.affected === 0) {
@@ -40,6 +41,16 @@ export class BoardsService {
             }
 
             console.log(result); // DeleteResult { raw: [], affected: 1 } // 성공 시. 없으면 0
+    }
+
+    // 게시물 상태 업데이트
+    async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+        const board = await this.getBoardById(id);
+
+        board.status = status;
+        await this.boardRepository.save(board);
+
+        return board;
     }
 }
 

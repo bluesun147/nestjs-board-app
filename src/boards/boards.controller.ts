@@ -27,6 +27,13 @@ export class BoardsController {
         return this.boardsService.deleteBoardById(id);
     }
 
+    @Patch('/:id/status')
+    updateBoardStatus(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('status', BoardStatusValidationPipe) status: BoardStatus
+    ) {
+        return this.boardsService.updateBoardStatus(id, status);
+    }
 }
 
 // @Controller('boards') // /boards 라는 경로
