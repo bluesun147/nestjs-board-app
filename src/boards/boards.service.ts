@@ -16,6 +16,11 @@ export class BoardsService {
 
     }
 
+    // 게시물 생성하기
+    createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+        return this.boardRepository.createBoard(createBoardDto); // repository에서 불러옴.
+    }
+
     // id 이용해 특정 게시물 가져오기
     async getBoardById(id: number): Promise<Board> { // 리턴값은 entity(Board). entity에 다 정의해뒀기 때문
         const found = await this.boardRepository.findOne(id); // https://www.inflearn.com/questions/482960 네스트는 typeorm v0.2 사용.
@@ -26,6 +31,8 @@ export class BoardsService {
 
         return found;
     }
+
+    
 }
 
 

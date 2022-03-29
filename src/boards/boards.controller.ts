@@ -11,6 +11,12 @@ export class BoardsController {
 
     }
 
+    @Post()
+    @UsePipes(ValidationPipe)// 핸들러 레벨. 유효성 체크
+    createBoard(@Body() CreateBoardDto: CreateBoardDto): Promise<Board> {
+        return this.boardsService.createBoard(CreateBoardDto);
+    }
+
     @Get('/:id')
     getBoardById(@Param('id') id: number): Promise <Board> { // id 이용해 특정 게시물 가져오기
         return this.boardsService.getBoardById(id);
