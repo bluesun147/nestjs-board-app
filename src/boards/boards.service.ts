@@ -19,6 +19,10 @@ export class BoardsService {
     // 게시물 생성하기
     createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
         return this.boardRepository.createBoard(createBoardDto); // repository에서 불러옴.
+    };
+
+    async getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
+        return this.boardRepository.find(); // find안에 속성 안넣으면 모두 가져옴.
     }
 
     // id 이용해 특정 게시물 가져오기
@@ -30,7 +34,7 @@ export class BoardsService {
         }
 
         return found;
-    }
+    };
 
      // id로 게시물 삭제
     async deleteBoardById(id: number): Promise<void> {
@@ -41,7 +45,7 @@ export class BoardsService {
             }
 
             console.log(result); // DeleteResult { raw: [], affected: 1 } // 성공 시. 없으면 0
-    }
+    };
 
     // 게시물 상태 업데이트
     async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
@@ -51,7 +55,7 @@ export class BoardsService {
         await this.boardRepository.save(board);
 
         return board;
-    }
+    };
 }
 
 

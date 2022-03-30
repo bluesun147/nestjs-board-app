@@ -13,8 +13,13 @@ export class BoardsController {
 
     @Post()
     @UsePipes(ValidationPipe)// 핸들러 레벨. 유효성 체크
-    createBoard(@Body() CreateBoardDto: CreateBoardDto): Promise<Board> {
+    createBoard(@Body() CreateBoardDto: CreateBoardDto): Promise<Board> { // 게시물 생성
         return this.boardsService.createBoard(CreateBoardDto);
+    }
+
+    @Get()
+    getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
+        return this.boardsService.getAllBoards();
     }
 
     @Get('/:id')
@@ -28,7 +33,7 @@ export class BoardsController {
     }
 
     @Patch('/:id/status')
-    updateBoardStatus(
+    updateBoardStatus (// 게시물 상태 업데이트
         @Param('id', ParseIntPipe) id: number,
         @Body('status', BoardStatusValidationPipe) status: BoardStatus
     ) {
