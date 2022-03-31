@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
 import { User } from './user.entity';
@@ -15,6 +15,16 @@ export class AuthController {
     @Get('/users') // 유저 정보 읽기
     readUsers(): Promise<User[]> {
         return this.authService.readUsers();
+    }
+
+    @Post('signin') // 로그인
+    signIn(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
+        return this.authService.signIn(authCredentialsDto);
+    }
+
+    @Delete('/:id')
+    deleteUserById(@Param('id') id: number): Promise<void> {
+        return this.authService.deleteUserById(id);
     }
 
 }
