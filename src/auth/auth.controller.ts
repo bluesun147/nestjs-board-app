@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
 import { User } from './user.entity';
@@ -18,13 +19,19 @@ export class AuthController {
     }
 
     @Post('signin') // 로그인
-    signIn(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
+    signIn(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto): Promise<{accessToken: string}> {
         return this.authService.signIn(authCredentialsDto);
     }
 
     @Delete('/:id')
     deleteUserById(@Param('id') id: number): Promise<void> {
         return this.authService.deleteUserById(id);
+    }
+
+    @Post('/test')
+    @UseGuards(AuthGuard()) // req안에 유저 객체 넣기 위해 추가해야 함.
+    test(@Req() req) {
+        console.log(req);
     }
 
 }
