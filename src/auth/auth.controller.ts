@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards, ValidationP
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
+import { GetUser } from './get-user.decorator';
 import { User } from './user.entity';
 
 @Controller('auth') // auth 라는 경로
@@ -30,9 +31,7 @@ export class AuthController {
 
     @Post('/test')
     @UseGuards(AuthGuard()) // req안에 유저 객체 넣기 위해 추가해야 함.
-    test(@Req() req) {
-        console.log(req);
+    test(@GetUser() user: User) { // 커스텀 데코레이터
+        console.log(user);
     }
-
 }
-
