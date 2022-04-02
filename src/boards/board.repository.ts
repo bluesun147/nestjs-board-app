@@ -1,4 +1,5 @@
 import { NotFoundException } from "@nestjs/common";
+import { User } from "src/auth/user.entity";
 import { EntityRepository, Repository } from "typeorm";
 import { BoardStatus } from "./board-status.enum";
 import { Board } from "./board.entity";
@@ -9,13 +10,14 @@ import { CreateBoardDto } from "./dto/create-board.dto";
 @EntityRepository(Board) // 이 클래스가 Board 컨트롤하는 리포지토리임을 선언
 export class BoardRepository extends Repository<Board> {
 
-    async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    async createBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
         const {title, description} = createBoardDto;
 
         const board = this.create({ // 새로운 객체 생성. typeorm 메소드
             title,
             description,
-            status: BoardStatus.PUBLIC
+            status: BoardStatus.PUBLIC,
+            user // 유저 정보 추가. board entity에 유저 컬럼 추가했기 때문
         })
 
         await this.save(board); // db에 저장. typeorm 메소드

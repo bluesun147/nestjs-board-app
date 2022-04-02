@@ -22,6 +22,6 @@ export class Board extends BaseEntity {
     // 관계 형성 위해서는 엔티티에 서로간의 필드 넣어줘야 함
     // 타입, 유저에서 보드에 어떻게 접근하는지, 보드 정보 가져올 때 유저 정보는 가져오지 않는다는 뜻
     @ManyToOne(type => User, user => user.boards, {eager: false}) // N:1 relationship
-    user: User;
+    user: User; // 유저 컬럼
 }
 

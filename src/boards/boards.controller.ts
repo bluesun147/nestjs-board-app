@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 import { BoardStatus } from './board-status.enum';
 import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
@@ -15,8 +17,9 @@ export class BoardsController {
 
     @Post()
     @UsePipes(ValidationPipe)// 핸들러 레벨. 유효성 체크
-    createBoard(@Body() CreateBoardDto: CreateBoardDto): Promise<Board> { // 게시물 생성
-        return this.boardsService.createBoard(CreateBoardDto);
+    createBoard(@Body() CreateBoardDto: CreateBoardDto, // 게시물 생성
+    @GetUser() user: User): Promise<Board> { // 커스텀 데코레이터 이용, 유저 객체 가져오기 위해
+        return this.boardsService.createBoard(CreateBoardDto, user); // user 정보 같이 넣어줌.
     }
 
     @Get()
