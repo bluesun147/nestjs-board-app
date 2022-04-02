@@ -5,3 +5,4 @@ export const GetUser = createParamDecorator((data, ctx: ExecutionContext): User 
     const req = ctx.switchToHttp().getRequest(); // 전테 리퀘스트 중에
     return req.user; // user 부분만 리턴
 })
+
