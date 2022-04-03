@@ -22,8 +22,20 @@ export class BoardsService {
         return this.boardRepository.createBoard(createBoardDto, user); // repository에서 불러옴. user도 추가
     };
 
-    async getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
-        return this.boardRepository.find(); // find안에 속성 안넣으면 모두 가져옴.
+    // async getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
+    //     return this.boardRepository.find(); // find안에 속성 안넣으면 모두 가져옴.
+    // }
+
+    async getAllBoards( // 헤당 유저 게시물만 가져오기
+        user: User
+    ): Promise <Board[]> {
+        const query = this.boardRepository.createQueryBuilder('board'); // 쿼리 사용
+
+        query.where('board.userId = :userId', {userId: user.id});
+
+        const boards = await query.getMany(); // 전부 가져옴. getOne()은 하나
+
+        return boards;
     }
 
     // id 이용해 특정 게시물 가져오기

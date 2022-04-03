@@ -22,9 +22,16 @@ export class BoardsController {
         return this.boardsService.createBoard(CreateBoardDto, user); // user 정보 같이 넣어줌.
     }
 
+    // @Get()
+    // getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
+    //     return this.boardsService.getAllBoards();
+    // }
+
     @Get()
-    getAllBoards(): Promise <Board[]> { // 모든 게시물 가져오기
-        return this.boardsService.getAllBoards();
+    getAllBoards(
+        @GetUser() user: User
+    ): Promise <Board[]> { // 헤당 유저 게시물만 가져오기
+        return this.boardsService.getAllBoards(user);
     }
 
     @Get('/:id')
