@@ -49,9 +49,9 @@ export class BoardsService {
         return found;
     };
 
-     // id로 게시물 삭제
-    async deleteBoardById(id: number): Promise<void> {
-        const result = await this.boardRepository.delete(id);
+    // id로 게시물 삭제. 만든 사람만 삭제할 수 있도록 user 정보도 추가
+    async deleteBoardById(id: number, user: User): Promise<void> {
+        const result = await this.boardRepository.delete({id, user}); // user: user
 
             if (result.affected === 0) {
                 throw new NotFoundException(`Can't find Board with id ${id}`);

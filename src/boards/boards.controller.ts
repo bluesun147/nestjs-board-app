@@ -40,8 +40,10 @@ export class BoardsController {
     }
 
     @Delete('/:id')
-    deleteBoardById(@Param('id', ParseIntPipe) id: number): Promise <void> { // ParseIntPipe: nest built-in pipe. integer만.
-        return this.boardsService.deleteBoardById(id);
+    deleteBoardById(@Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User
+    ): Promise <void> { // ParseIntPipe: nest built-in pipe. integer만.
+        return this.boardsService.deleteBoardById(id, user);
     }
 
     @Patch('/:id/status')
