@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
@@ -11,15 +11,17 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 @Controller('boards') // boards 라는 경로
 @UseGuards(AuthGuard()) // 컨트롤러 레벨로 주면 모든 핸들러가 다 영향 받음.
 export class BoardsController {
+    private logger = new Logger('BoardController'); // 로거 객체
     constructor(private boardsService: BoardsService) { // 컨트롤러 안에 서비스 주입 (inject)
 
     }
 
     @Post()
     @UsePipes(ValidationPipe)// 핸들러 레벨. 유효성 체크
-    createBoard(@Body() CreateBoardDto: CreateBoardDto, // 게시물 생성
+    createBoard(@Body() createBoardDto: CreateBoardDto, // 게시물 생성
     @GetUser() user: User): Promise<Board> { // 커스텀 데코레이터 이용, 유저 객체 가져오기 위해
-        return this.boardsService.createBoard(CreateBoardDto, user); // user 정보 같이 넣어줌.
+        this.logger.verbose(`User ${user.username} creating a new board. Payload: ${JSON.stringify(createBoardDto)}`);
+        return this.boardsService.createBoard(createBoardDto, user); // user 정보 같이 넣어줌.
     }
 
     // @Get()
@@ -31,6 +33,7 @@ export class BoardsController {
     getAllBoards(
         @GetUser() user: User
     ): Promise <Board[]> { // 헤당 유저 게시물만 가져오기
+        this.logger.verbose(`User ${user.username} trying to get all boards`);
         return this.boardsService.getAllBoards(user);
     }
 
