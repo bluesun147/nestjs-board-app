@@ -4,7 +4,7 @@ import { Board } from "src/boards/board.entity";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
-@Unique(['username'])
+@Unique(['username']) // 유일한 값
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;

@@ -44,7 +44,7 @@ export class BoardsService {
 
         if (!found) {
             throw new NotFoundException(`Can't find Board with id ${id}`);
-        }
+        }   
 
         return found;
     };
