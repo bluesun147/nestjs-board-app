@@ -1,7 +1,7 @@
 db:
-  host: 'localhost'
+  host: 'localhost' #'legendhallofalcohol.caeegmvfe5w3.ap-northeast-2.rds.amazonaws.com'
   username: 'postgres'
-  password: 'bluesun'
+  password: 'bluesun' #'benjamin987'
   synchronize: true
 
 jwt:
