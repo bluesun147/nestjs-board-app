@@ -33,5 +33,6 @@ export class AuthController {
     @UseGuards(AuthGuard()) // req안에 유저 객체 넣기 위해 추가해야 함.
     test(@GetUser() user: User) { // 커스텀 데코레이터
         console.log(user);
+        return user;
     }
 }
